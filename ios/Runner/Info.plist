@@ -45,5 +45,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>(Reason to use Photo Library)</string>
+    <key>NSCameraUsageDescription</key> <!-- added this for camera permission -->
+    <string>(Reason to use camera access)</string>
 </dict>
 </plist>
