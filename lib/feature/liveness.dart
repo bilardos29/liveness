@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:liveness/feature/kakzaki_screen.dart';
 import 'package:liveness/feature/m7_screen.dart';
-import 'package:m7_livelyness_detection/index.dart';
 import 'package:mnc_identifier_face/mnc_identifier_face.dart';
 import 'package:mnc_identifier_face/model/liveness_detection_result_model.dart';
 
@@ -30,11 +28,6 @@ class _LivenessState extends State<Liveness> {
       MaterialPageRoute(builder: (context) => const M7Screen()));
   }
 
-  Future<void> startDetectionKakzaki() async {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const KakzakiScreen()));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,11 +46,11 @@ class _LivenessState extends State<Liveness> {
               startDetectionM7();
             },
             child: const Text("Liveness using M7"),),
-
-            ElevatedButton(onPressed: () {
-              startDetectionKakzaki();
-            },
-            child: const Text("Liveness using kakzaki"),),
+            //
+            // ElevatedButton(onPressed: () {
+            //   startDetectionKakzaki();
+            // },
+            // child: const Text("Liveness using kakzaki"),),
           ],
         ),
       ),

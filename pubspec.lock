@@ -248,14 +248,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
-  liveness_cam:
-    dependency: "direct main"
-    description:
-      name: liveness_cam
-      sha256: f600f3a27e98ba660501a5899f8d0d71771fffb3db6c7068dd2d32b94daffbb5
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.4"
   lottie:
     dependency: transitive
     description:
