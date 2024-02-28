@@ -299,10 +299,11 @@ packages:
   mnc_identifier_face:
     dependency: "direct main"
     description:
-      path: "package/mnc_identifier_face-master"
-      relative: true
-    source: path
-    version: "0.0.1"
+      name: mnc_identifier_face
+      sha256: fe75dab1e9ed2f151f0fdcf6d75d61c83c89377950982ffc6b3bb80abeb69a27
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   path:
     dependency: transitive
     description:

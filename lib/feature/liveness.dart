@@ -13,33 +13,12 @@ class Liveness extends StatefulWidget {
 }
 
 class _LivenessState extends State<Liveness> {
-
-  final List<DetectionMode> detectionModes = [
-    DetectionMode.HOLD_STILL,
-    DetectionMode.SHAKE_HEAD,
-    DetectionMode.BLINK,
-    DetectionMode.OPEN_MOUTH,
-    DetectionMode.SMILE,
-  ];
-
   final MncIdentifierFace faceLivenessDetection = MncIdentifierFace();
-
-  List<DetectionMode> get _getRandomDetectionModes {
-    final random = Random();
-    var index1 = 0;
-    var index2 = random.nextInt(detectionModes.length);
-    while (index2 == index1) {
-      index2 = random.nextInt(detectionModes.length);
-    }
-
-    return [detectionModes[0], detectionModes[index2]];
-  }
 
   Future<void> startDetectionMNC() async {
     try {
       final livenessDetectionResult =
       await MncIdentifierFace().startLivenessDetection(
-        detectionModes: _getRandomDetectionModes,
       );
       debugPrint("result is ${livenessDetectionResult!.isSuccess}");
     } catch (e) {
