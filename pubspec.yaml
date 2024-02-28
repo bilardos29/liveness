@@ -11,8 +11,10 @@ dependencies:
   flutter:
     sdk: flutter
 
+  mnc_identifier_face:
+    path: package/mnc_identifier_face-master
+
   cupertino_icons: ^1.0.2
-  mnc_identifier_face: ^1.0.2
   m7_livelyness_detection: ^0.0.6+4
 
 
