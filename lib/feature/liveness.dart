@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:liveness/feature/m7_screen.dart';
+import 'package:m7_livelyness_detection/index.dart';
 import 'package:mnc_identifier_face/mnc_identifier_face.dart';
 import 'package:mnc_identifier_face/model/liveness_detection_result_model.dart';
+
 
 class Liveness extends StatefulWidget {
   const Liveness({super.key});
@@ -11,7 +14,7 @@ class Liveness extends StatefulWidget {
 
 class _LivenessState extends State<Liveness> {
 
-  Future<void> startDetection() async {
+  Future<void> startDetectionMNC() async {
     try {
       LivenessDetectionResult livenessResult =
       await MncIdentifierFace().startLivenessDetection();
@@ -20,14 +23,37 @@ class _LivenessState extends State<Liveness> {
       debugPrint('Something goes unexpected with error is $e');
     }
   }
+
+  Future<void> startDetectionM7() async {
+    Navigator.push(context, 
+      MaterialPageRoute(builder: (context) => const M7Screen()));
+  }
+
+  Future<void> startDetectionKakzaki() async {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const M7Screen()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: ElevatedButton(onPressed: () {
-          startDetection();
-        },
-        child: Text("Take camera"),),
+      body: Column(
+        children: [
+          ElevatedButton(onPressed: () {
+            startDetectionMNC();
+          },
+          child: const Text("Liveness using MNC"),),
+
+          ElevatedButton(onPressed: () {
+            startDetectionM7();
+          },
+          child: const Text("Liveness using M7"),),
+
+          ElevatedButton(onPressed: () {
+            startDetectionKakzaki();
+          },
+          child: const Text("Liveness using kakzaki"),),
+        ],
       ),
     );
   }
