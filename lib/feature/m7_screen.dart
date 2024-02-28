@@ -27,6 +27,7 @@ class _M7ScreenState extends State<M7Screen> {
 
   @override
   Widget build(BuildContext context) {
+    print('test ${M7LivelynessStep.values}');
     return Scaffold(
       appBar: _buildAppBar(),
       body: _buildBody(),
@@ -297,42 +298,43 @@ class _M7ScreenState extends State<M7Screen> {
         Expanded(
           flex: 14,
           child: ListView.builder(
-            physics: const ClampingScrollPhysics(),
-            itemCount: M7LivelynessStep.values.length,
-            itemBuilder: (context, index) => ExpansionTile(
-              title: Text(
-                _getTitle(
-                  M7LivelynessStep.values[index],
-                ),
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              children: [
-                ListTile(
-                  title: Text(
-                    _getSubTitle(
-                      M7LivelynessStep.values[index],
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: M7LivelynessStep.values.length,
+                  itemBuilder: (context, index) => ExpansionTile(
+                    title: Text(
+                      _getTitle(
+                        M7LivelynessStep.values[index],
+                      ),
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.normal,
-                    ),
+                    children: [
+                      ListTile(
+                        title: Text(
+                          _getSubTitle(
+                            M7LivelynessStep.values[index],
+                          ),
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                        trailing: CupertinoSwitch(
+                          // value: _isSelected(
+                          //   M7LivelynessStep.values[index],
+                          // ),
+                          value: true,
+                          onChanged: (value) => _onStepValChanged(
+                            M7LivelynessStep.values[index],
+                            value,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  trailing: CupertinoSwitch(
-                    value: _isSelected(
-                      M7LivelynessStep.values[index],
-                    ),
-                    onChanged: (value) => _onStepValChanged(
-                      M7LivelynessStep.values[index],
-                      value,
-                    ),
-                  ),
                 ),
-              ],
-            ),
-          ),
         ),
       ],
     );

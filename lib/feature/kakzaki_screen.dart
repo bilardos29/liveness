@@ -24,7 +24,14 @@ class _KakzakiScreenState extends State<KakzakiScreen> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Liveness Cam'),
+          title: const Text(
+            "Liveness Cam",
+          ),
+          leading: InkWell(
+              onTap: (){
+                Navigator.pop(context);
+              },
+              child: const Icon(Icons.navigate_before)),
         ),
         body: Center(
           child: Column(
