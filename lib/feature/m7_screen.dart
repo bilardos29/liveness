@@ -37,11 +37,11 @@ class _M7ScreenState extends State<M7Screen> {
   void _initValues() {
     _veificationSteps.addAll(
       [
-        M7LivelynessStepItem(
-          step: M7LivelynessStep.smile,
-          title: "Smile",
-          isCompleted: false,
-        ),
+        // M7LivelynessStepItem(
+        //   step: M7LivelynessStep.smile,
+        //   title: "Smile",
+        //   isCompleted: false,
+        // ),
         M7LivelynessStepItem(
           step: M7LivelynessStep.blink,
           title: "Blink",

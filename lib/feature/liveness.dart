@@ -6,7 +6,6 @@ import 'package:mnc_identifier_face/mnc_identifier_face.dart';
 
 import 'liveness_detection.dart';
 
-
 class Liveness extends StatefulWidget {
   const Liveness({super.key});
 
@@ -20,8 +19,7 @@ class _LivenessState extends State<Liveness> {
   Future<void> startDetectionMNC() async {
     try {
       final livenessDetectionResult =
-      await MncIdentifierFace().startLivenessDetection(
-      );
+          await MncIdentifierFace().startLivenessDetection();
       debugPrint("result is ${livenessDetectionResult!.isSuccess}");
     } catch (e) {
       debugPrint('Something goes unexpected with error is $e');
@@ -29,8 +27,8 @@ class _LivenessState extends State<Liveness> {
   }
 
   Future<void> startDetectionM7() async {
-    Navigator.push(context, 
-      MaterialPageRoute(builder: (context) => const M7Screen()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const M7Screen()));
   }
 
   @override
@@ -42,33 +40,40 @@ class _LivenessState extends State<Liveness> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ElevatedButton(onPressed: () {
-              startDetectionMNC();
-            },
-            child: const Text("Liveness using MNC"),),
-
-            ElevatedButton(onPressed: () {
-              startDetectionM7();
-            },
-            child: const Text("Liveness using M7"),),
-
-            ElevatedButton(onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const LivenessDetectionPage()));
-            },
-              child: const Text("Liveness Detection"),),
-
-            ElevatedButton(onPressed: () async {
-              String value = await SelfieLiveness.detectLiveness(
-                poweredBy: "",
-                assetLogo: "assets/raven_logo_white.png",
-                compressQualityandroid: 70,
-                compressQualityiOS: 70,
-              );
-              setState(() {});
-              print("hasil value $value");
-            },
-            child: const Text("Liveness using selfie liveness"),),
+            ElevatedButton(
+              onPressed: () {
+                startDetectionMNC();
+              },
+              child: const Text("Liveness using MNC"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                startDetectionM7();
+              },
+              child: const Text("Liveness using M7"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const LivenessDetectionPage()));
+              },
+              child: const Text("Liveness Detection"),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                String value = await SelfieLiveness.detectLiveness(
+                  poweredBy: "",
+                  assetLogo: "assets/raven_logo_white.png",
+                  compressQualityandroid: 70,
+                  compressQualityiOS: 70,
+                );
+                setState(() {});
+                print("hasil value $value");
+              },
+              child: const Text("Liveness using selfie liveness"),
+            ),
           ],
         ),
       ),
