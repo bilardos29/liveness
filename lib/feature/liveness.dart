@@ -1,8 +1,10 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_selfie_liveness/selfie_liveness.dart';
 import 'package:liveness/feature/m7_screen.dart';
+import 'package:liveness_detection_flutter_plugin/index.dart';
 import 'package:mnc_identifier_face/mnc_identifier_face.dart';
+
+import 'liveness_detection.dart';
 
 
 class Liveness extends StatefulWidget {
@@ -49,11 +51,24 @@ class _LivenessState extends State<Liveness> {
               startDetectionM7();
             },
             child: const Text("Liveness using M7"),),
-            //
-            // ElevatedButton(onPressed: () {
-            //   startDetectionKakzaki();
-            // },
-            // child: const Text("Liveness using kakzaki"),),
+
+            ElevatedButton(onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const LivenessDetectionPage()));
+            },
+              child: const Text("Liveness Detection"),),
+
+            ElevatedButton(onPressed: () async {
+              String value = await SelfieLiveness.detectLiveness(
+                poweredBy: "",
+                assetLogo: "assets/raven_logo_white.png",
+                compressQualityandroid: 70,
+                compressQualityiOS: 70,
+              );
+              setState(() {});
+              print("hasil value $value");
+            },
+            child: const Text("Liveness using selfie liveness"),),
           ],
         ),
       ),
