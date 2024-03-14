@@ -55,7 +55,9 @@ class _LivenessState extends State<Liveness> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => FaceDetectorView(listFace: [
-                          FaceModel(faceAction: "Blink", faceEnum: FaceEnum.blink),
+                          // FaceModel(faceAction: "Blink", faceEnum: FaceEnum.blink),
+                          FaceModel(faceAction: "Smile", faceEnum: FaceEnum.smile),
+                          // FaceModel(faceAction: "Look Up", faceEnum: FaceEnum.lookUp),
                         ],)));
               },
               child: const Text("Face Google ML Kit"),

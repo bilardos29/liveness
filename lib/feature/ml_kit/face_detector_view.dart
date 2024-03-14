@@ -75,98 +75,94 @@ class _FaceDetectorViewState extends State<FaceDetectorView> {
     if (_isBusy) return;
     _isBusy = true;
     final faces = await _faceDetector.processImage(inputImage);
+    /*
+    * Untuk mengambil image bisa ambil dari input image
+    * inputImage.filePath
+    * */
+    print("image : ${inputImage.filePath}");
+
     for (Face face in faces) {
-      final double? rotX =
-          face.headEulerAngleX; // Head is tilted up and down rotX degrees
-      final double? rotY =
-          face.headEulerAngleY; // Head is rotated to the right rotY degrees
-      final double? rotZ =
-          face.headEulerAngleZ; // Head is tilted sideways rotZ degrees
-
-      // If landmark detection was enabled with FaceDetectorOptions (mouth, ears,
-      // eyes, cheeks, and nose available):
-      final FaceLandmark? earL = face.landmarks[FaceLandmarkType.leftEar];
-      final FaceLandmark? earR = face.landmarks[FaceLandmarkType.rightEar];
-      final FaceLandmark? mouthL = face.landmarks[FaceLandmarkType.leftMouth];
-      final FaceLandmark? mouthR = face.landmarks[FaceLandmarkType.rightMouth];
-      final FaceLandmark? eyeL = face.landmarks[FaceLandmarkType.leftEye];
-      final FaceLandmark? eyeR = face.landmarks[FaceLandmarkType.rightEye];
-
-
-      if (earL != null &&
-          earR != null &&
-          mouthL != null &&
-          mouthR != null &&
-          eyeL != null &&
-          eyeR != null) {
-        switch (faceModel!.faceEnum) {
-          case FaceEnum.lookDown:
-            {
-              if (rotX! < -30) {
-                print("lagi melihat ke bawah $rotX");
-                changeFace();
-              }
-              break;
-            }
-          case FaceEnum.lookUp:
-            {
-              if (rotX! > 30) {
-                print("lagi melihat ke atas $rotX");
-                changeFace();
-              }
-              break;
-            }
-          case FaceEnum.turnLeft:
-            {
-              if (rotY! > 30) {
-                print("lagi melihat kiri $rotY");
-                changeFace();
-              }
-              break;
-            }
-          case FaceEnum.turnRight:
-            {
-              if (rotY! < -30) {
-                print("lagi melihat kanan $rotY");
-                changeFace();
-              }
-              break;
-            }
-          case FaceEnum.blink:
-            {
-              final double? leftEyeOpenProb = face.leftEyeOpenProbability;
-              final double? rightEyeOpenProb = face.rightEyeOpenProbability;
-              if (leftEyeOpenProb != null && rightEyeOpenProb != null) {
-                //untuk kedip berapa hitungannya x dan y nya
-                if(leftEyeOpenProb < 0.3 && rightEyeOpenProb < 0.3) {
-                  changeFace();
-                }
-                print("posisi mata $leftEyeOpenProb - $rightEyeOpenProb");
-              }
-              break;
-            }
-          case FaceEnum.smile:
-            {
-              final double? smileProb = face.smilingProbability;
-              if (smileProb! >= 0.8) {
-                print("lagi senyum $smileProb");
-                changeFace();
-              }
-              break;
-            }
-          default:
-            break;
-        }
-        print("human");
-      } else {
-        print("tidak ditemukan humannya");
-        Navigator.pop(context);
-      }
+      processLiveness(face);
     }
 
     _isBusy = false;
     if (mounted) {
       setState(() {});
+    }
+  }
+
+  processLiveness(Face face) {
+
+    final double? rotX = face.headEulerAngleX; // Head is tilted up and down rotX degrees
+    final double? rotY = face.headEulerAngleY; // Head is rotated to the right rotY degrees
+    final double? rotZ = face.headEulerAngleZ; // Head is tilted sideways rotZ degrees
+
+    // If landmark detection was enabled with FaceDetectorOptions (mouth, ears,
+    // eyes, cheeks, and nose available):
+    final FaceLandmark? earL = face.landmarks[FaceLandmarkType.leftEar];
+    final FaceLandmark? earR = face.landmarks[FaceLandmarkType.rightEar];
+    final FaceLandmark? mouthL = face.landmarks[FaceLandmarkType.leftMouth];
+    final FaceLandmark? mouthR = face.landmarks[FaceLandmarkType.rightMouth];
+    final FaceLandmark? eyeL = face.landmarks[FaceLandmarkType.leftEye];
+    final FaceLandmark? eyeR = face.landmarks[FaceLandmarkType.rightEye];
+
+    if (earL != null && earR != null &&
+        mouthL != null && mouthR != null &&
+        eyeL != null && eyeR != null) {
+      switch (faceModel!.faceEnum) {
+        case FaceEnum.lookDown : {
+            if (rotX! < -30) {
+              print("melihat ke bawah $rotX");
+              changeFace();
+            }
+            break;
+          }
+        case FaceEnum.lookUp : {
+            if (rotX! > 30) {
+              print("melihat ke atas $rotX");
+              changeFace();
+            }
+            break;
+          }
+        case FaceEnum.turnLeft : {
+            if (rotY! > 30) {
+              print("melihat kiri $rotY");
+              changeFace();
+            }
+            break;
+          }
+        case FaceEnum.turnRight : {
+            if (rotY! < -30) {
+              print("melihat kanan $rotY");
+              changeFace();
+            }
+            break;
+          }
+        case FaceEnum.blink : {
+            final double? leftEyeOpenProb = face.leftEyeOpenProbability;
+            final double? rightEyeOpenProb = face.rightEyeOpenProbability;
+            if (leftEyeOpenProb != null && rightEyeOpenProb != null) {
+              //untuk kedip berapa hitungannya x dan y nya
+              if(leftEyeOpenProb < 0.3 && rightEyeOpenProb < 0.3) {
+                changeFace();
+              }
+              print("mata kedip $leftEyeOpenProb - $rightEyeOpenProb");
+            }
+            break;
+          }
+        case FaceEnum.smile : {
+            final double? smileProb = face.smilingProbability;
+            if (smileProb! >= 0.85) {
+              print("senyum $smileProb");
+              changeFace();
+            }
+            break;
+          }
+        default:
+          break;
+      }
+    } else {
+      print("tidak ditemukan human");
     }
   }
 }
