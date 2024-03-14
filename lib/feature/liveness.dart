@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_selfie_liveness/selfie_liveness.dart';
-import 'package:liveness/feature/m7_screen.dart';
-import 'package:liveness_detection_flutter_plugin/index.dart';
+import 'package:liveness/feature/ml_kit/face_model.dart';
 import 'package:mnc_identifier_face/mnc_identifier_face.dart';
 
-import 'liveness_detection.dart';
+import 'face_api_screen.dart';
+import 'ml_kit/face_detector_view.dart';
 
 class Liveness extends StatefulWidget {
   const Liveness({super.key});
@@ -26,11 +25,6 @@ class _LivenessState extends State<Liveness> {
     }
   }
 
-  Future<void> startDetectionM7() async {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const M7Screen()));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,31 +42,23 @@ class _LivenessState extends State<Liveness> {
             ),
             ElevatedButton(
               onPressed: () {
-                startDetectionM7();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const FaceApiScreen()));
               },
-              child: const Text("Liveness using M7"),
+              child: const Text("Face API"),
             ),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const LivenessDetectionPage()));
+                        builder: (context) => FaceDetectorView(listFace: [
+                          FaceModel(faceAction: "Blink", faceEnum: FaceEnum.blink),
+                        ],)));
               },
-              child: const Text("Liveness Detection"),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                String value = await SelfieLiveness.detectLiveness(
-                  poweredBy: "",
-                  assetLogo: "assets/raven_logo_white.png",
-                  compressQualityandroid: 70,
-                  compressQualityiOS: 70,
-                );
-                setState(() {});
-                print("hasil value $value");
-              },
-              child: const Text("Liveness using selfie liveness"),
+              child: const Text("Face Google ML Kit"),
             ),
           ],
         ),
