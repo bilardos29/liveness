@@ -4,6 +4,7 @@ import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:liveness/feature/ml_kit/face_model.dart';
 
 import 'detector_view.dart';
+import 'painters/face_detector_painter.dart';
 
 class FaceDetectorView extends StatefulWidget {
   FaceDetectorView({required this.listFace});
@@ -81,9 +82,22 @@ class _FaceDetectorViewState extends State<FaceDetectorView> {
     * */
     print("image : ${inputImage.filePath}");
 
-    for (Face face in faces) {
-      processLiveness(face);
+    // if (inputImage.metadata?.size != null &&
+    //     inputImage.metadata?.rotation != null) {
+    //   final painter = FaceDetectorPainter(
+    //     faces,
+    //     inputImage.metadata!.size,
+    //     inputImage.metadata!.rotation,
+    //     _cameraLensDirection,
+    //   );
+    //   _customPaint = CustomPaint(painter: painter);
+    // } else {
+      for (Face face in faces) {
+        processLiveness(face);
+      // }
+      // _customPaint = null;
     }
+
 
     _isBusy = false;
     if (mounted) {
@@ -143,7 +157,7 @@ class _FaceDetectorViewState extends State<FaceDetectorView> {
             final double? rightEyeOpenProb = face.rightEyeOpenProbability;
             if (leftEyeOpenProb != null && rightEyeOpenProb != null) {
               //untuk kedip berapa hitungannya x dan y nya
-              if(leftEyeOpenProb < 0.3 && rightEyeOpenProb < 0.3) {
+              if(leftEyeOpenProb < 0.2 && rightEyeOpenProb < 0.2) {
                 changeFace();
               }
               print("mata kedip $leftEyeOpenProb - $rightEyeOpenProb");
@@ -152,7 +166,7 @@ class _FaceDetectorViewState extends State<FaceDetectorView> {
           }
         case FaceEnum.smile : {
             final double? smileProb = face.smilingProbability;
-            if (smileProb! >= 0.85) {
+            if (smileProb! >= 0.9) {
               print("senyum $smileProb");
               changeFace();
             }
